@@ -1,25 +1,13 @@
-<script context="module">
-    export const load = async ({ fetch }) => {
-        const res = await fetch("/api/items.json");
-        const posts = await res.json();
-
-        return {
-            props: {
-                items,
-            },
-        };
-    };
-</script>
-
 <script>
 	import { fly } from 'svelte/transition';
     import { elasticIn, elasticOut } from 'svelte/easing';
 	//import { content } from './content.js';
-    import { Icon, Nav, Button } from 'sveltestrap';
+    import { Icon, Button } from 'sveltestrap';
 
     export let modalIsOpen;
     export let align;
     export let showMenu;
+    export let items;
 
 	let menuKeyboard = false;
 
@@ -78,7 +66,7 @@
 </dialog>
 {/if}
 
-<Nav class="fixed-menu {align} {showMenu ? 'opened' : 'closed'}" aria-label="fixed-bottom-menu" on:keydown={keyEventListener}> 
+<nav class="fixed-menu {align} {showMenu ? 'opened' : 'closed'}" aria-label="fixed-bottom-menu" on:keydown={keyEventListener}> 
     {#if showMenu }
         {#each items as link, index}
             <slot>
@@ -100,12 +88,9 @@
     <Button on:click={toggleMenu} class="icon-hamburger {showMenu ? 'opened' : 'closed'}">
         <Icon name="list" />
     </Button>
-</Nav>
+</nav>
 
-<style lang="scss">
-a {
-    flex: 0 0 57.4px;
-}
+<style lang="text/scss">
 .opened {
     transition: all .15s cubic-bezier(0.39, 0.575, 0.565, 1);
     width: max-content;
